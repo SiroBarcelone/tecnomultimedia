@@ -1,5 +1,6 @@
 PFont fuente;
-float Y;
+int Y, abajo, costado, tam;
+PImage casco, aguila, sangre1, sangre2;
 
 
 void setup(){
@@ -7,13 +8,31 @@ void setup(){
   loadFont("TNR.vlw");
   fuente = loadFont("TNR.vlw");
   textFont(fuente);
-  fill(255,197,3);
+  tam = 0;
+  abajo = 2120;
+  costado = 0;
   Y = 600;
+  casco = loadImage("CascoNazi.png");
+  aguila = loadImage("AguilaNazi.png");
+  sangre1 = loadImage("Sangre1.png");
+  sangre2 = loadImage("Sangre2.png");
 }
 
 void draw(){
+  tam = tam + 1;
+  abajo = abajo - 1;
+  costado = costado + 1;
   Y = Y-1;
   background(0);
+  image(casco, 100, 100);
+  image(aguila, 100, 1000 + abajo);
+  if(abajo < 1500){
+    image(sangre2, 0, 0);
+  }
+  if(abajo < 1000){
+    image(sangre1, 400, 100);
+  }
+  fill(255,197,3);
   textSize(40);
   text("Written and directed by", 100, 50 + Y);
   textSize(80);

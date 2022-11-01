@@ -1,22 +1,16 @@
-//https://youtu.be/-sNuuMK7HM0
-Juego juego;
+juego juego;
 
 void setup() {
   size(800, 600);
-  juego = new Juego();
+  juego = new juego();
 }
 
 void draw() {
   background(0);
   juego.dibujarJuego();
-  juego.movimiento();
-  juego.colision();
+  juego.ejecutarJuego();
+  keyPressed();
 }
 
 void keyPressed() {
-  juego.reiniciar();
-}
-
-void mousePressed() {
-  juego.Iniciar();
 }

@@ -3,6 +3,7 @@ juego juego;
 void setup() {
   size(800, 600);
   juego = new juego();
+  noCursor();
 }
 
 void draw() {

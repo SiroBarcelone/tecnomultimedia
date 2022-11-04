@@ -6,7 +6,7 @@ class Personaje {
   int angulo;
   int longitud;
   int count;
-  int [] [] centro = {{Xpos, Ypos}};
+  //int [] [] centro = {{Xpos, Ypos}};
 
 
 
@@ -20,8 +20,9 @@ class Personaje {
     rectMode(CENTER);
     fill(0, 200, 200);    
     pushMatrix();
+    float a = atan2(mouseY-height/2, mouseX-width/2);
     translate(Xpos, Ypos);
-    rotate(i);
+    rotate(a);
     rect(0, 0, 20, 20);
     popMatrix();
     i+=mouseX+mouseY;
@@ -49,18 +50,18 @@ class Personaje {
 
   void dibujarMira() {
     fill(200, 0, 0, 100);
-    ellipse(mouseX, mouseY, 5, 5);
+    noStroke();
+    ellipse(mouseX, mouseY, 4, 4);
   }
 
   void calcularAnguloDeMira() {
-    this.angulo = round(map(atan2(mouseY-this.Ypos, mouseX-this.Xpos), -PI, PI, 0, 360));
-    this.longitud = int(dist(this.Xpos, this.Ypos, mouseX, mouseY));
   }
 
   void mira() {
-    this.count++;
+    //this.count++;
     pushStyle();
-    line(this.centro[0], this.centro[1],mouseX, mouseY);
+    stroke(255,0,0,50);
+    line(this.Xpos, this.Ypos, mouseX, mouseY);
     noFill();
     circle(mouseX, mouseY, 5);
     popStyle();

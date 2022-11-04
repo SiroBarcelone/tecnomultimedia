@@ -1,19 +1,29 @@
 class zombie {
-  int Ypos;
-  int Xpos;
-  int vel;
-  
-  zombie(int Xpostemp, int Ypostemp, int veltemp) {
-    Ypos=Ypostemp;
-    Xpos=Xpostemp;
-    vel=veltemp;
+  PVector zombi;
+  int zYpos;
+  int zXpos;
+  float zvel = 0.5;
+  zombie(int zXpostemp, int zYpostemp, float zveltemp) {
+    zYpos=zYpostemp;
+    zXpos=zXpostemp;
+    zvel=zveltemp;
+    zombi = new PVector(random(width), random(height), 0.);
   }
 
-  void Zombie() {
+  void moverZombie() {
   }
 
   void dibujarZombie() {
-    fill(10,230,80);
-    rect(Xpos, Ypos, 20, 20);
+    pushMatrix();
+    float angle = atan2(Personaje.Ypos-zombi.y, Personaje.Xpos-zombi.x);
+    translate(zombi.x, zombi.y);
+    rotate(angle);
+    fill(0, 230, 80);
+    rect(0, 0, 20, 20);
+    //float angle2 = atan2(Personaje.Ypos, Personaje.Xpos);
+    float newX = cos(angle) * zvel + zombi.x;
+    float newY = sin(angle) * zvel + zombi.y;
+    zombi.set(newX, newY, 0.);
+    popMatrix();
   }
 }

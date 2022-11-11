@@ -2,14 +2,12 @@ class Personaje {
   float Xpos;
   float Ypos;
   int rotacion;
+  int tam=20;
   float i=0;
   int angulo;
   int longitud;
   int count;
-  //int [] [] centro = {{Xpos, Ypos}};
-
-
-
+  float apuntar;
   Personaje(float Xpostemp, float Ypostemp) {
     Ypos=Ypostemp;
     Xpos=Xpostemp;
@@ -23,9 +21,8 @@ class Personaje {
     float a = atan2(mouseY-height/2, mouseX-width/2);
     translate(Xpos, Ypos);
     rotate(a);
-    rect(0, 0, 20, 20);
+    rect(0, 0, tam, tam);
     popMatrix();
-    i+=mouseX+mouseY;
   }
 
   void moverPersonaje() {
@@ -46,24 +43,17 @@ class Personaje {
   }
 
   void disparar() {
+    //if (dist(mouseX, mouseY, zombie.Xposin, zombie.Yposin)) {
+    //if (dist(mouseX, mouseY, width/2, height/2)<zombie.ztam) {
   }
+  // }
 
-  void dibujarMira() {
-    fill(200, 0, 0, 100);
-    noStroke();
-    ellipse(mouseX, mouseY, 4, 4);
-  }
 
-  void calcularAnguloDeMira() {
-  }
-
-  void mira() {
-    //this.count++;
-    pushStyle();
-    stroke(255,0,0,50);
-    line(this.Xpos, this.Ypos, mouseX, mouseY);
-    noFill();
-    circle(mouseX, mouseY, 5);
-    popStyle();
+  void contador() {
+    fill(255, 0, 0);
+    text("zombies asesinados:"+count, 10, 20);
+    if (zombie.vidaZombie==false) {    
+      count+=1;
+    }
   }
 }

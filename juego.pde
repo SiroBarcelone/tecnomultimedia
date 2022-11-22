@@ -1,55 +1,37 @@
-Personaje personaje;
+Personaje Personaje;
 zombie zombie;
-Mira mira;
+Comida comida;
+
 
 class juego {
-  zombie [] zombi1= new zombie[20];
-  zombie [] zombi2= new zombie[20];
-  zombie [] zombi3= new zombie[20];
-  zombie [] zombi4= new zombie[20];
+  PImage fondo;
+  zombie [] zombi= new zombie[80];
 
   juego() {
-    personaje=new Personaje(width/2, height/2);
-    mira=new Mira();
-    zombie=new zombie(0, 0);
-    for (int i=0; i<zombi1.length; i++) {
-      zombi1[i] = new zombie(random(width), random(-200, 0));
-    }
-    for (int i=0; i<zombi2.length; i++) {
-      zombi2[i] = new zombie(random(800, 800+200), random(height));
-    }
-    for (int i=0; i<zombi3.length; i++) {
-      zombi3[i] = new zombie(random(width), random(600, 600+200));
-    }
-    for (int i=0; i<zombi4.length; i++) {
-      zombi4[i] = new zombie(random(-200, 0), random(height));
+    fondo=loadImage("fondojuego.png");
+    Personaje=new Personaje(width/2, height/2);
+    comida=new Comida();
+    zombie=new zombie();
+    for (int i=0; i<zombi.length; i++) {
+      zombi[i] = new zombie();
     }
   }
 
   void ejecutarJuego() {
-    personaje.moverPersonaje();
+    comida.posicionComida();
     //Personaje.mira();
   }
 
   void dibujarJuego() {
-    personaje.dibujarPersonaje();
-    for (int i=0; i<zombi1.length; i++) {
-      zombi1[i].dibujarZombie();
+    image(fondo, width/2, height/2);
+    for (int i=0; i<zombi.length; i++) {
+      zombi[i].dibujarZombie();
     }
-    for (int i=0; i<zombi2.length; i++) {
-      zombi2[i].dibujarZombie();
-    }
-    for (int i=0; i<zombi3.length; i++) {
-      zombi3[i].dibujarZombie();
-    }
-    for (int i=0; i<zombi4.length; i++) {
-      zombi4[i].dibujarZombie();
-    }
-    mira.dibujarMira();
-    personaje.contador();
-   // zombie.zombieMuerte();
+    Personaje.dibujarMira();
+    Personaje.moverPersonaje();
+    Personaje.dibujarPersonaje();
+    comida.dibujarComida();
   }
   void controlesJuego() {
-    personaje.disparar();
   }
 }

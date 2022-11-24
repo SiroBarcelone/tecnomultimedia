@@ -6,12 +6,13 @@ class Personaje {
   int angulo;
   int count;
   boolean vida=true;
-  boolean herido;
+  boolean herido=false;
   float apuntar;
   float pvel;
   PImage personajeherido;
   PImage personaje;
   int countMov = 0;
+  float contadordisparo=0;
   String disparo="disparo.wav";
 
 
@@ -20,7 +21,12 @@ class Personaje {
     Xpos=Xpostemp;
     personaje=loadImage("personaje.png");
     personajeherido=loadImage("personajeherido.png");
-    personajeherido.resize(tam*2, tam*2);
+    // player = minim.loadFile(disparo);
+  }
+
+  void dibujar() {
+    dibujarMira();
+    dibujarPersonaje();
   }
 
   void dibujarMira() {
@@ -54,14 +60,17 @@ class Personaje {
 
     popMatrix();
 
-    if (mousePressed && playing==false) {
-      player = minim.loadFile(disparo);
-      player.play();
-      playing = true;
-    } else if (mouseX >= 250 && playing == true) {
-    player.pause();
-    playing = false;
-  }
+    if (mousePressed==true && playing==false) {
+      //player.play();
+      //playing = true;
+      contadordisparo++;
+      if (contadordisparo==2) {
+        //playing=false;
+        //player.pause();
+        //contadordisparo=0;
+        mousePressed=false;
+      }
+    }
   }
 
   void moverPersonaje() {

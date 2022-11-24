@@ -6,7 +6,8 @@ class Comida {
   int contador;
   float tiempo=0;
   boolean comer;
-  PImage[] comida = new PImage[10];  
+  PImage[] comida = new PImage[10];
+  
   Comida() {
     tiempo=millis();
     comida[0]=loadImage("comida1.png");
@@ -36,24 +37,8 @@ class Comida {
     fill(255);
     ellipse(CXpos, CYpos, Ctam, Ctam);
     image(comida[comidacount], CXpos, CYpos);
-    //-----------------Lógica de puntaje-----------------------------------
-    if (dist(CXpos, CYpos, Personaje.Xpos, Personaje.Ypos) < Ctam) {
-      comer=true;
-    }
-    if (comer==true) {
-      CYpos=random(height);
-      CXpos=random(width);
-      contador+=1;
-      tiempo++;
-      println("agarrado");
-      if(Personaje.herido==true){
-        Personaje.herido=false;
-        Personaje.vida=true;
-      }
-      if(tiempo>0.5){
-       comer=false;
-      }
-    }
+    
+    
     fill(200, 0, 0);
     text("comida obtenida: " + contador, 30, 30);
   }

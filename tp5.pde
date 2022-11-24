@@ -2,20 +2,15 @@ import ddf.minim.*;
 Minim minim;
 AudioPlayer player;
 boolean playing=false;
-
-
-juego juego;
+Juego juego;
 
 
 void setup() {
   size(800, 600);
-  minim = new Minim (this);
-  juego = new juego();
-  juego.ejecutarJuego();
-  player = minim.loadFile (Personaje.disparo);
-
-
-
+  /*minim = new Minim (this);
+   player = minim.loadFile (personaje.disparo);
+   */
+  juego = new Juego();
   noCursor();
 }
 
@@ -26,5 +21,4 @@ void draw() {
 }
 
 void mouseClicked() {
-  juego.controlesJuego();
 }

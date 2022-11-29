@@ -6,26 +6,28 @@ class Juego {
   boolean perdiste;
   boolean game;
   PImage victoria;
+  PImage perdida;
   PImage fondo;
-  Zombie [] zombies = new Zombie[1];
+  Zombie [] zombies = new Zombie[40];
+
 
   Juego() {
     victoria=loadImage("imagenvictoria.jpg");
+    perdida=loadImage("imagenperdida.jpg");
     ganaste=false;
     perdiste=false;
-    game=true;
+    game=false;
     fondo=loadImage("fondojuego.png");
     personaje=new Personaje(width/2, height/2);
-    comida=new Comida();
+    comida=new Comida(width/2, height/2);
     for (int i=0; i<zombies.length; i++) {
-      zombies[i] = new Zombie();
+      zombies[i] = new Zombie(1);
     }
   }
 
-  void ejecutarJuego() {
-  }
-
   void dibujarJuego() {
+    colisiones();
+    noCursor();
     if (game==true) {
       image(fondo, width/2, height/2);
       for (int i=0; i<zombies.length; i++) {
@@ -35,29 +37,32 @@ class Juego {
       personaje.dibujar();
       personaje.moverPersonaje();
       comida.dibujarComida();
-      //zombie.ubicacion();
     }
     if (ganaste==true) {
       game=false;
       image(victoria, width/2, height/2);
       textSize(20);
       fill(20, 200, 10);
-      text("Conseguiste la comida necesaria", width/2, 500);
+      text("Conseguiste la comida necesaria", width/2-130, 500);
+    }
+
+    if (perdiste==true) {
+      game=false;
+      image(perdida, width/2, height/2);
+      textSize(20);
+      fill(200, 20, 10);
+      text("No lograste sobrevivir...", width/2-130, 500);
     }
   }
 
-  void Puntos() {
-    //Matar zombies
-    if (dist(mouseX, mouseY, zombie.Xposin, zombie.Yposin) < zombie.ztam-2 && mousePressed) {
-      zombie.vidazombie=false;
-    }
 
-    //Puntos de comida
+  void colisiones() {
     if (dist(comida.CXpos, comida.CYpos, personaje.Xpos, personaje.Ypos) < comida.Ctam) {
       comida.comer=true;
     }
 
     if (comida.comer==true) {
+      comida.comidacount=int(random(0, 4));
       comida.CYpos=random(height);
       comida.CXpos=random(width);
       comida.contador+=1;
@@ -71,19 +76,27 @@ class Juego {
         comida.comer=false;
       }
     }
-  }
 
-  void colisionZombie() {
+    if (comida.contador==20) {
+      ganaste=true;
+    }
+
     //Personaje herido y muerte
-    if (personaje.vida==true && zombie.vidazombie==true) {
-      if (dist(personaje.Xpos, personaje.Ypos, zombie.Xposin, zombie.Yposin) <personaje.tam ) {
-        println("HERIDO1");
-        int countrec=0;
-        countrec++;
-        fill(255, 0, 0, 240);
-        rect(width/2, height/2, width, height);
-        personaje.herido=true;
-        personaje.vida=false;
+    for (int i=0; i<zombies.length; i++) {
+      if (personaje.vida==true && zombies[i].vidazombie==true) {
+        if (dist(personaje.Xpos, personaje.Ypos, zombies[i].Xposin, zombies[i].Yposin) <personaje.tam ) {
+          println("HERIDO1");
+          int countrec=0;
+          countrec++;
+          fill(255, 0, 0, 240);
+          rect(width/2, height/2, width, height);
+          personaje.herido=true;
+          personaje.vida=false;
+        }
+      } else if (personaje.herido==true && zombies[i].vidazombie==true && personaje.countInmunidad>100) {
+        if (dist(personaje.Xpos, personaje.Ypos, zombies[i].Xposin, zombies[i].Yposin) <personaje.tam ) {
+          perdiste=true;
+        }
       }
     }
   }

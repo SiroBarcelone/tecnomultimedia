@@ -1,24 +1,20 @@
 import ddf.minim.*;
 Minim minim;
 AudioPlayer player;
+Pantallas pantallas;
 boolean playing=false;
-Juego juego;
-
 
 void setup() {
   size(800, 600);
-  /*minim = new Minim (this);
-   player = minim.loadFile (personaje.disparo);
-   */
-  juego = new Juego();
-  noCursor();
+  minim = new Minim (this);
+  pantallas= new Pantallas();
 }
 
 void draw() {
   background(0);
-  juego.dibujarJuego();
-  keyPressed();
+  pantallas.dibujarPantallas();
 }
 
-void mouseClicked() {
+void mousePressed() {
+  pantallas.mousePressed();
 }

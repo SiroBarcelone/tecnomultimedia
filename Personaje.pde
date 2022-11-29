@@ -11,17 +11,21 @@ class Personaje {
   float pvel;
   PImage personajeherido;
   PImage personaje;
+  PImage sangre;
   int countMov = 0;
+  int countInmunidad;
   float contadordisparo=0;
   String disparo="disparo.wav";
-
+  Audioplayer shoot;
 
   Personaje(float Xpostemp, float Ypostemp) {
+    countInmunidad=second();
     Ypos=Ypostemp;
     Xpos=Xpostemp;
     personaje=loadImage("personaje.png");
     personajeherido=loadImage("personajeherido.png");
-    // player = minim.loadFile(disparo);
+    sangre=loadImage("herido.png");
+    // shoot = minim.loadFile(disparo);
   }
 
   void dibujar() {
@@ -49,16 +53,22 @@ class Personaje {
     personaje.resize(tam*2, tam*2);
     rotate(1.6);
     if (vida==true) {
-      pvel=2;
-      image(personaje, 0, 0);
+      pvel=3;
+      image(personaje, 0, 0, 40, 40);
+      countInmunidad=0;
     }
 
     if (herido==true) {
-      image(personajeherido, 0, 0);
+      image(personajeherido, 0, 0, 40, 40);
       pvel=0.8;
+      countInmunidad++;
     }
 
     popMatrix();
+
+    if (herido==true) {
+      image(sangre, width, height/2);
+    }
 
     if (mousePressed==true && playing==false) {
       //player.play();
@@ -72,20 +82,19 @@ class Personaje {
       }
     }
   }
-
   void moverPersonaje() {
-    if (keyPressed && (key==CODED)) {
+    if (keyPressed) {
 
-      if (keyCode==UP) {
+      if (key=='w'| key=='W') {
         Ypos-=pvel;
       }
-      if (keyCode==DOWN) {
+      if (key=='s'| key=='S') {
         Ypos+=pvel;
       }
-      if (keyCode==LEFT) {
+      if (key=='a'| key=='A') {
         Xpos-=pvel;
       }
-      if (keyCode==RIGHT) {
+      if (key=='d'| key=='D') {
         Xpos+=pvel;
       }
     }

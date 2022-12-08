@@ -16,7 +16,7 @@ class Personaje {
   int countInmunidad;
   float contadordisparo=0;
   String disparo="disparo.wav";
-  Audioplayer shoot;
+ // Audioplayer shoot;
 
   Personaje(float Xpostemp, float Ypostemp) {
     countInmunidad=second();

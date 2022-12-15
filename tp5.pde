@@ -1,22 +1,25 @@
-//https://youtu.be/-sNuuMK7HM0
+import ddf.minim.*;
+Minim minim;
+AudioPlayer player;
+Pantallas pantallas;
+boolean playing=false;
 Juego juego;
 
 void setup() {
   size(800, 600);
-  juego = new Juego();
+  minim = new Minim (this);
+  pantallas= new Pantallas();
+  //juego=new Juego();
 }
+
 
 void draw() {
   background(0);
-  juego.dibujarJuego();
-  juego.movimiento();
-  juego.colision();
-}
-
-void keyPressed() {
-  juego.reiniciar();
+  pantallas.dibujarPantallas();
+  //juego.dibujarJuego();
+  
 }
 
 void mousePressed() {
-  juego.Iniciar();
+  pantallas.mousePressed();
 }

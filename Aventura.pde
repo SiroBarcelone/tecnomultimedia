@@ -1,5 +1,6 @@
 class Aventura {
   Juego juego;
+  Pantalla [] pantallas = new Pantalla[6];
   Pantalla pantalla1;
   Pantalla pantalla2;
   Pantalla pantalla3;
@@ -16,7 +17,6 @@ class Aventura {
 
 
   Aventura() {
-
     menu = new Pantalla();
     creditos = new Pantalla();
     pantalla1 = new Pantalla();
@@ -103,9 +103,6 @@ class Aventura {
         juego.game=true;
         juego.perdiste=false;
       }
-      //if (juego.game==true) {
-       // juego.mouseClicked();
-      //}
     }
   }
 }

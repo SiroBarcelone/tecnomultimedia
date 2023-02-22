@@ -54,7 +54,6 @@ class Botones {
       } else {
         presionado=false;
         if (presionado==false) {
-          //botones.mute();
           botones.rewind();
         }
       }

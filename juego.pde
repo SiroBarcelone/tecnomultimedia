@@ -8,7 +8,6 @@ class Juego {
   PImage victoria;
   PImage perdida;
   PImage fondo;
-  //int contadorJuego;
   Zombie [] zombies = new Zombie[40];
 
 
@@ -88,7 +87,6 @@ class Juego {
         }
       }
 
-      //Personaje herido y muerte
       for (int i=0; i<zombies.length; i++) {
         if (personaje.vida==true && zombies[i].vidazombie==true) {
           if (dist(personaje.Xpos, personaje.Ypos, zombies[i].Xposin, zombies[i].Yposin) <personaje.tam ) {
@@ -115,8 +113,4 @@ class Juego {
   void keyPressed() {
     personaje.moverPersonaje();
   }
-
-  //void mouseClicked() {
-  // personaje.mouseClicked();
-  //}
 }

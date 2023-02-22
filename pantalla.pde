@@ -42,13 +42,6 @@ class Pantalla {
     } else if (mostrarBoton2==true) {
       boton2.boton=true;
     }
-
-    if (boton1.presionado==true) {      
-      //println("presionado 1");
-    }
-    if (boton2.presionado==true) {     
-      //println("presionado 2");
-    }
   }
 
   void mouseClicked(int _pantallasig1, int _pantallasig2) {

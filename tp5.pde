@@ -1,12 +1,8 @@
 import ddf.minim.*;
 Minim minim;
 AudioPlayer player;
-Pantalla pantallas;
 AudioPlayer botones;
 Aventura aventura;
-boolean playing=false;
-int loopCounter;
-Juego juego;
 
 void setup() {
   size(800, 600);

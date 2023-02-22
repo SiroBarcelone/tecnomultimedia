@@ -97,17 +97,4 @@ class Personaje {
       }
     }
   }
-
-  /*void mouseClicked() {
-   playing=true;
-   if (playing == true) {
-   shoot.play();
-   contadordisparo++;
-   } else if (playing==false) {
-   if (contadordisparo==3) {
-   shoot.pause();
-   contadordisparo=0;
-   }
-   }
-   }*/
 }

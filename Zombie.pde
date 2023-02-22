@@ -20,14 +20,12 @@ class Zombie {
     zombiemuerto = loadImage("zombimuerto.png");
     mov[0] = loadImage("Zombi1.png");
     mov[1] = loadImage("zombi2.png");
-    //ubicacion();
     zvel=_zvel;
   }
 
   void ubicacion() {
     if (posinicial==true) {
       poscounter++;
-     // println("posinicial");
       Yposin=random(-800, -40);
       if (Yposin<-30) {
         Xposin=random(0+ztam/2, width-ztam/2);
@@ -36,7 +34,6 @@ class Zombie {
         posinicial=false;
       }
     } else if (posinicial==false) {
-     // println("arrancoo");
       poscounter=0;
       Yposin+=zvel;
     }
@@ -74,7 +71,6 @@ class Zombie {
   }
 
   void puntos() {
-    //Matar zombies
     distZombie=dist(mouseX, mouseY, Xposin, Yposin);
     if (distZombie < ztam*2 && mousePressed) {
       vidazombie=false;

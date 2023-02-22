@@ -27,7 +27,7 @@ class Zombie {
   void ubicacion() {
     if (posinicial==true) {
       poscounter++;
-      println("posinicial");
+     // println("posinicial");
       Yposin=random(-800, -40);
       if (Yposin<-30) {
         Xposin=random(0+ztam/2, width-ztam/2);
@@ -36,7 +36,7 @@ class Zombie {
         posinicial=false;
       }
     } else if (posinicial==false) {
-      println("arrancoo");
+     // println("arrancoo");
       poscounter=0;
       Yposin+=zvel;
     }

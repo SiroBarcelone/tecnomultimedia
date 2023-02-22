@@ -4,6 +4,8 @@ class Botones {
   boolean presionado;
   float X, Y, Xtam, Ytam;
   int pantallaNum;
+  boolean playingBoton=false;
+
 
   Botones (float _X, float _Y, float _Xtam, float _Ytam) {
     X=_X;
@@ -12,12 +14,16 @@ class Botones {
     Ytam=_Ytam;
     apoyado=false;
     presionado=false;
-    boton=true;
+    botones = minim.loadFile("boton.wav");
+    if (playingBoton==true) {
+      botones.play();
+    } else {
+      botones.pause();
+    }
   }
 
-  void dibujarBoton(int _pantallaNum, String texto) {
+  void dibujarBoton(String texto) {
     if (boton==true) {
-      pantallaNum=_pantallaNum;
       rectMode(CORNER);
       noStroke();
       fill(50, 0);
@@ -25,22 +31,33 @@ class Botones {
       fill(255);
       textSize(20);
       text(texto, X+10, Y+18);
-      if ( mouseX > X && mouseX <X+Xtam && mouseY > Y && mouseY < Y + Ytam) {
+      if ( mouseX > X && mouseX < X + Xtam && mouseY > Y && mouseY < Y + Ytam) {
         apoyado=true;
-        fill(20, 0, 255, 80);
+        fill(200, 0, 25, 90);
         rect(X, Y, Xtam, Ytam);
         fill(255);
         text(texto, X+10, Y+18);
-        mousePressed();
+      } else {
+        apoyado=false;
       }
     }
   }
 
-  void mousePressed() {
-    if (apoyado==true && mousePressed) {
-      presionado=true;
-    } else {
-      presionado=false;
+  void mouseClicked(int _pantallaNum) {
+    pantallaNum=_pantallaNum;
+    if (boton==true) {
+      if (apoyado==true) {
+        presionado=true;
+        if (presionado==true) {
+          botones.play();
+        }
+      } else {
+        presionado=false;
+        if (presionado==false) {
+          //botones.mute();
+          botones.rewind();
+        }
+      }
     }
   }
 }

@@ -5,23 +5,17 @@ class Juego {
   boolean ganaste;
   boolean perdiste;
   boolean game;
-  boolean dibujarJuego;
   PImage victoria;
   PImage perdida;
   PImage fondo;
-  int countrec=0;
-  Botones reiniciar;
+  //int contadorJuego;
   Zombie [] zombies = new Zombie[40];
 
 
   Juego() {
-    reiniciar = new Botones(0, 180, width, 30);
-    victoria=loadImage("imagenvictoria.jpg");
-    perdida=loadImage("imagenperdida.jpg");
     ganaste=false;
     perdiste=false;
     game=false;
-    dibujarJuego=false;
     fondo=loadImage("fondojuego.png");
     personaje=new Personaje(width/2, height/2);
     comida=new Comida(width/2, height/2);
@@ -31,88 +25,98 @@ class Juego {
   }
 
   void dibujarJuego() {
-    if (dibujarJuego==true) {
-      if (game==true) {
-        colisiones();
-        noCursor();
-        image(fondo, width/2, height/2);
-        for (int i=0; i<zombies.length; i++) {
-          zombies[i].dibujarZombie();
-          zombies[i].ubicacion();
-        }
-        personaje.dibujar();
-        personaje.moverPersonaje();
-        comida.dibujarComida();
+    if (game==true) {
+      colisiones();
+      aventura.mostrarPantallas=false;
+      noCursor();
+      image(fondo, width/2, height/2);
+      for (int i=0; i<zombies.length; i++) {
+        zombies[i].dibujarZombie();
+        zombies[i].ubicacion();
       }
-      if (ganaste==true) {
-        game=false;
-        image(victoria, width/2, height/2);
-        textSize(20);
-        fill(20, 200, 10);
-        text("Conseguiste la comida necesaria", width/2-130, 500);
-        reiniciar.dibujarBoton(1, "Reiniciar");
+      personaje.dibujar();
+      comida.dibujarComida();
+      if (personaje.inmunidad==true && personaje.herido==true) {
+        fill(255, 182, 23, 150);
+        stroke(0);
+        strokeWeight(3);
+        rect(100, height-60, 350, 80);
+        fill(0);
+        text("INMUNIDAD: "+personaje.countInmunidad, 40, height-65);
       }
       if (perdiste==true) {
         game=false;
-        image(perdida, width/2, height/2);
-        textSize(20);
-        fill(200, 20, 10);
-        text("No lograste sobrevivir...", width/2-130, 500);
-        reiniciar.dibujarBoton(1, "Reiniciar");
-      }
-    }
-  }
-
-  void mouseClicked() {
-    if (reiniciar.presionado==true) {
-      perdiste=false;
-      ganaste=false;
-      aventura.mostrarPantallas=true;
-      aventura.pantallaNum=1;
-    }
-  }
-
-  void colisiones() {
-    if (dist(comida.CXpos, comida.CYpos, personaje.Xpos, personaje.Ypos) < comida.Ctam) {
-      comida.comer=true;
-    }
-
-    if (comida.comer==true) {
-      comida.comidacount=int(random(0, 4));
-      comida.CYpos=random(height);
-      comida.CXpos=random(width);
-      comida.contador+=1;
-      comida.tiempo++;
-      println("agarrado");
-      if (personaje.herido==true) {
+        aventura.mostrarPantallas=true;
+        aventura.pantallaNum=11;
         personaje.herido=false;
         personaje.vida=true;
+        comida.contador=0;
+      } else if (comida.contador>=15) {
+        ganaste=true;
       }
-      if (comida.tiempo>0.5) {
-        comida.comer=false;
+      if (ganaste==true) {
+        game=false;
+        aventura.mostrarPantallas=true;
+        aventura.pantallaNum=10;
+        personaje.vida=true;
+        comida.contador=0;
       }
     }
+  }
 
-    if (comida.contador==20) {
-      ganaste=true;
-    }
 
-    //Personaje herido y muerte
-    for (int i=0; i<zombies.length; i++) {
-      if (personaje.vida==true && zombies[i].vidazombie==true) {
-        if (dist(personaje.Xpos, personaje.Ypos, zombies[i].Xposin, zombies[i].Yposin) <personaje.tam ) {
-          println("HERIDO1");
-          countrec++;
-          fill(255, 0, 0, 240);
-          rect(width/2, height/2, width, height);
-          personaje.herido=true;
-          personaje.vida=false;
+
+  void colisiones() {
+    if (game==true) {
+
+      if (dist(comida.CXpos, comida.CYpos, personaje.Xpos, personaje.Ypos) < comida.Ctam) {
+        comida.comer=true;
+      }
+
+      if (comida.comer==true) {
+        comida.comidacount=int(random(0, 4));
+        comida.CYpos=random(height);
+        comida.CXpos=random(width);
+        comida.contador+=1;
+        comida.tiempo++;
+        if (personaje.herido==true) {
+          personaje.herido=false;
+          personaje.vida=true;
         }
-      } else if (personaje.herido==true && zombies[i].vidazombie==true && personaje.countInmunidad>100) {
-        if (dist(personaje.Xpos, personaje.Ypos, zombies[i].Xposin, zombies[i].Yposin) <personaje.tam ) {
-          perdiste=true;
+        if (comida.tiempo>0.5) {
+          comida.comer=false;
+        }
+      }
+
+      //Personaje herido y muerte
+      for (int i=0; i<zombies.length; i++) {
+        if (personaje.vida==true && zombies[i].vidazombie==true) {
+          if (dist(personaje.Xpos, personaje.Ypos, zombies[i].Xposin, zombies[i].Yposin) <personaje.tam ) {
+            fill(255, 0, 0, 240);
+            rect(width/2, height/2, width, height);
+            personaje.herido=true;
+            personaje.vida=false;
+          }
+        } else if (personaje.herido==true && zombies[i].vidazombie==true) {
+          if (dist(personaje.Xpos, personaje.Ypos, zombies[i].Xposin, zombies[i].Yposin) <personaje.tam) {
+            if (personaje.inmunidad==false) {
+              perdiste=true;
+              personaje.herido=false;
+              personaje.vida=true;
+            }
+          } else {
+            perdiste=false;
+          }
         }
       }
     }
   }
+
+  void keyPressed() {
+    personaje.moverPersonaje();
+  }
+
+  //void mouseClicked() {
+  // personaje.mouseClicked();
+  //}
 }

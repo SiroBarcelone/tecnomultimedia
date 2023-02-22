@@ -7,24 +7,22 @@ class Personaje {
   int count;
   boolean vida=true;
   boolean herido=false;
+  boolean inmunidad=false;
   float apuntar;
   float pvel;
   PImage personajeherido;
   PImage personaje;
   PImage sangre;
   int countMov = 0;
-  int countInmunidad;
+  int countInmunidad=100;
   float contadordisparo=0;
   String disparo="disparo.wav";
-  AudioPlayer shoot;
 
   Personaje(float Xpostemp, float Ypostemp) {
-    countInmunidad=second();
     Ypos=Ypostemp;
     Xpos=Xpostemp;
     personaje=loadImage("personaje.png");
     personajeherido=loadImage("personajeherido.png");
-    shoot = minim.loadFile(disparo);
   }
 
   void dibujar() {
@@ -51,32 +49,37 @@ class Personaje {
     rect(0, 0, tam, tam);
     personaje.resize(tam*2, tam*2);
     rotate(1.6);
+
     if (vida==true) {
-      pvel=3;
+      countInmunidad=100;
+      pvel=4;
       image(personaje, 0, 0, 40, 40);
-      countInmunidad=0;
     }
 
     if (herido==true) {
       image(personajeherido, 0, 0, 40, 40);
-      pvel=0.8;
-      countInmunidad++;
-    }
-
-    popMatrix();
-
-    if (mousePressed==true && playing==false) {
-      shoot.play();
-      playing = true;
-      contadordisparo++;
-      if (contadordisparo==2) {
-        playing=false;
-        shoot.pause();
-        contadordisparo=0;
-        mousePressed=false;
+      pvel=1.5;
+      inmunidad=true;
+      if (inmunidad==true) {
+        countInmunidad--;
+        println("inmunidad");
+        if (countInmunidad<1) {
+          countInmunidad=0;
+          inmunidad=false;
+          println("vulnerable");
+        }
+        if (countInmunidad>100) {
+          countInmunidad=100;
+          inmunidad=false;
+          println("vulnerable");
+        }
       }
     }
+
+
+    popMatrix();
   }
+
   void moverPersonaje() {
     if (keyPressed) {
 
@@ -94,4 +97,17 @@ class Personaje {
       }
     }
   }
+
+  /*void mouseClicked() {
+   playing=true;
+   if (playing == true) {
+   shoot.play();
+   contadordisparo++;
+   } else if (playing==false) {
+   if (contadordisparo==3) {
+   shoot.pause();
+   contadordisparo=0;
+   }
+   }
+   }*/
 }

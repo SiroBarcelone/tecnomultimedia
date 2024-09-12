@@ -1,22 +1,23 @@
-//https://youtu.be/-sNuuMK7HM0
-Juego juego;
+import ddf.minim.*;
+Minim minim;
+AudioPlayer player;
+AudioPlayer botones;
+Aventura aventura;
 
 void setup() {
   size(800, 600);
-  juego = new Juego();
+  minim = new Minim (this);
+  player = minim.loadFile("Musicafondo.mp3");
+  aventura = new Aventura();
+  player.loop(4);
 }
+
 
 void draw() {
   background(0);
-  juego.dibujarJuego();
-  juego.movimiento();
-  juego.colision();
-}
-
-void keyPressed() {
-  juego.reiniciar();
+  aventura.draw();
 }
 
 void mousePressed() {
-  juego.Iniciar();
+  aventura.mouseClicked();
 }
